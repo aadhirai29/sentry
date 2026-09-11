@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sentry Architecture</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; width: 1600px; height: 1000px; font-family: Segoe UI, Arial, sans-serif; color: #183247; background: #f3f7f9; }
+  .canvas { width: 1600px; height: 1000px; padding: 64px 80px; background: linear-gradient(135deg, #ffffff, #e8f1f5); }
+  h1 { margin: 0; font-size: 52px; letter-spacing: -1px; }
+  .subtitle { margin-top: 8px; color: #6e8291; font-size: 22px; }
+  .flow { display: grid; grid-template-columns: 230px 64px 300px 64px 370px 64px 300px; align-items: center; margin-top: 72px; }
+  .box { min-height: 180px; padding: 24px; border: 2px solid #b8ccd6; border-radius: 16px; background: #fff; box-shadow: 0 12px 26px #18324718; }
+  .box h2 { margin: 0 0 14px; font-size: 23px; }
+  .box p { margin: 6px 0; color: #5f7787; font-size: 16px; line-height: 1.45; }
+  .user { border-top: 7px solid #247e9b; }
+  .agent { border-top: 7px solid #5d7fc0; }
+  .middleware { border-top: 7px solid #138a62; background: #f9fffc; }
+  .bank { border-top: 7px solid #9a6a00; }
+  .arrow { color: #247e9b; font-size: 42px; text-align: center; font-weight: 700; }
+  .security { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 56px; }
+  .security-card { min-height: 190px; padding: 22px; border: 1px solid #c8d9e1; border-radius: 14px; background: #fff; box-shadow: 0 8px 20px #1832470d; }
+  .security-card h3 { margin: 0 0 10px; font-size: 21px; }
+  .security-card p { margin: 0; color: #5f7787; font-size: 16px; line-height: 1.5; }
+  .auth { border-left: 6px solid #247e9b; } .risk { border-left: 6px solid #d5a52d; } .trajectory { border-left: 6px solid #b63b4b; }
+  .outcomes { display: flex; justify-content: center; gap: 20px; margin-top: 46px; }
+  .outcome { padding: 14px 28px; border-radius: 10px; font-size: 19px; font-weight: 800; }
+  .execute { color: #138a62; background: #dff3e9; } .hold { color: #9a6a00; background: #fff1cc; } .block { color: #b63b4b; background: #fbe3e6; }
+  .footer { margin-top: 45px; text-align: center; color: #6e8291; font-size: 17px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <h1>Sentry Runtime Security Architecture</h1>
+  <div class="subtitle">A policy enforcement layer between AI banking agents and core banking services</div>
+  <div class="flow">
+    <div class="box user"><h2>User</h2><p>Customer or bank employee</p></div>
+    <div class="arrow">→</div>
+    <div class="box agent"><h2>AI Banking Agent</h2><p>Proposes a structured banking action</p><p>Never calls the bank directly</p></div>
+    <div class="arrow">→</div>
+    <div class="box middleware"><h2>Sentry Middleware</h2><p>Evaluates identity, risk, scope, and trajectory</p><p>Stores audit and cross-session history</p></div>
+    <div class="arrow">→</div>
+    <div class="box bank"><h2>Core Banking System</h2><p>Receives only approved actions</p><p>Mock service in this prototype</p></div>
+  </div>
+  <div class="security">
+    <div class="security-card auth"><h3>1. Authorization Context</h3><p>Verifies the principal, permissions, account scope, and requested resource. Unauthorized actions are blocked at the action boundary.</p></div>
+    <div class="security-card risk"><h3>2. Reversibility Gate</h3><p>Classifies actions as READ, WRITE, or DESTRUCTIVE. Critical actions wait for explicit supervisor approval.</p></div>
+    <div class="security-card trajectory"><h3>3. Behavioral Trajectory</h3><p>Tracks escalation, denied attempts, scope drift, and principal activity across sessions.</p></div>
+  </div>
+  <div class="outcomes"><div class="outcome execute">EXECUTE · Safe and authorized</div><div class="outcome hold">REQUIRE CONFIRMATION · Critical action</div><div class="outcome block">BLOCK · Unauthorized or unsafe</div></div>
+  <div class="footer">Sentry gives AI agents useful capabilities without giving them unchecked authority.</div>
+</div>
+</body>
+</html>
