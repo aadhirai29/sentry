@@ -244,6 +244,19 @@ Run the scripted backend checks with:
 npm run scenarios
 ```
 
+## Deploy Publicly
+
+This is a Node web service, so deploy the backend and dashboard together on Render, Railway, or another Node host. A Render blueprint is included in `render.yaml`.
+
+For Render:
+
+1. Sign in at Render and choose **New +** -> **Blueprint**.
+2. Select the `aadhirai29/sentry` repository.
+3. Deploy the `sentry-banking-security` web service.
+4. Open the generated HTTPS URL.
+
+The production commands are `npm ci && npm run build` and `npm start`. The public URL will serve the dashboard and API from the same service. Local trajectory history remains runtime data and is not committed to Git.
+
 ## Mock Data Boundary
 
 The prototype uses:
